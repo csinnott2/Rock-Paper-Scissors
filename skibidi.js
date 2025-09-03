@@ -2,8 +2,6 @@ console.log("Hello World!");
 
 function getComputerChoice(){
     let theBoy = Math.random() * 10
-
-    console.log(theBoy)
     if(theBoy > 7){
         return "scissors";
     }
@@ -28,7 +26,7 @@ function playRound(human, robo)
     human = human.toLowerCase();
     robo = robo.toLowerCase();
 
-    console.log("Human Says: " + human, "Robot Says: " + robo);
+    info.textContent="Human Says: " + human + "\n Robot Says: " + robo;
 
     if(human=="rock")
     {
@@ -45,60 +43,51 @@ function playRound(human, robo)
             winner = "tie";
         }
     }
-    else if(human = "paper")
+    else if(human == "paper")
     {
-        if(robo = "scissors")
+        if(robo == "scissors")
         {
             winner = "robot";
         } 
-        else if(robo = "paper")
+        else if(robo == "paper")
         {
             winner = "tie";
         }
-        else if(robo = "rock")
+        else if(robo == "rock")
         {
             winner = "human";
         }
     }
-    else if(human="scissors")
+    else if(human=="scissors")
     {
-        if(robo = "scissors")
+        if(robo == "scissors")
         {
             winner = "tie";
         }
-        else if(robo = "paper")
+        else if(robo == "paper")
         {
             winner = "human";
         }
-        else if(robo = "rock")
+        else if(robo == "rock")
         {
             winner = "robot"
         }
     }
 
+    dub.textContent = "Winner is: " + winner;
     return winner;
 }
 
-function playGame(){
-    let peanut = getComputerChoice();
-    let wingull = getPersonChoice();
-    let mingus = "";
-    let round = 0;
-    while(round < 5) 
-    {
-        mingus = playRound(wingull, peanut);
-
+function scoreUp(mingus){
         if(mingus == "robot")
         {
             robotScore++;
-            round++;
             console.log("winner is " + mingus)
 
         }
         else if(mingus == "human")
         {
             humanScore++;
-            round++;
             console.log("winner is " + mingus)
 
         }
@@ -107,23 +96,71 @@ function playGame(){
             console.log("Tie");
             console.log("No Winner: " + mingus)
         }
+    }
 
-        peanut = getComputerChoice();
-        wingull = getPersonChoice();
+function checkWin(theMan, theBot)
+{
+    if(theMan == 5)
+    {
+        alert("HUMANS WIN");
+    }
+    else if(theBot == 5)
+    {
+        alert("ROBOTS WIN");
     }
 }
+
     console.log("Let's get it.")
     let humanScore = 0;
     let robotScore = 0;
-    playGame();
-    console.log("Human Score: " + humanScore)
-    console.log("Robot Score: " + robotScore)
 
-    if(humanScore < robotScore)
+
+    /*playGame();*/
+    const rock = document.querySelector("#rock")
+    const paper = document.querySelector("#paper")
+    const scissors = document.querySelector("#scissors")
+
+    let victory = "";
+    rock.addEventListener("click", () => 
     {
-        console.log("suffer meatbags, robots win again")
-    }
-    else if(robotScore<humanScore)
+        victory = playRound("rock", getComputerChoice());
+        scoreUp(victory);
+        robScore.textContent = "Robot: " + robotScore;
+        boyScore.textContent = "Human: " + humanScore;
+    })
+    paper.addEventListener("click", () => 
     {
-        console.log("Another dub for organics, the fathers of technology")
-    }
+        victory = playRound("paper", getComputerChoice());
+        scoreUp(victory);
+
+        robScore.textContent = "Robot: " + robotScore;
+        boyScore.textContent = "Human: " + humanScore;
+    })
+    scissors.addEventListener("click", () => 
+    {
+        victory = playRound("scissors", getComputerChoice());
+        scoreUp(victory);
+
+        robScore.textContent = "Robot: " + robotScore;
+        boyScore.textContent = "Human: " + humanScore;
+    })
+
+
+
+    const scoreboard = document.querySelector("#score");
+    const infoboard = document.querySelector("#INFO")
+    const info = document.createElement("p");
+    const dub = document.createElement("p");
+
+    const robScore = document.createElement("p");
+    const boyScore = document.createElement("p");
+    robScore.classList.add("robScore");
+    boyScore.classList.add("boySCore");
+
+
+    infoboard.appendChild(info);
+    infoboard.appendChild(dub);
+
+    scoreboard.appendChild(robScore);
+    scoreboard.appendChild(boyScore);
+
